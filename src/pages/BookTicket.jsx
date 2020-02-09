@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Title } from '../components/Title/Title';
 import { Input, IconInput } from '../components/Input/Input';
-import { FaUser, FaMailBulk } from 'react-icons/fa';
+import { FaMailBulk } from 'react-icons/fa';
 
 const BookTicket = ({ match }) => {
   console.log(match);
