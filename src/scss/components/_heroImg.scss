@@ -1,0 +1,15 @@
+.hero-img {
+  margin: auto;
+  text-align: center;
+  img {
+    width: 300px;
+    object-fit: cover;
+    margin: auto;
+    @include sm {
+      width: 390px;
+    }
+    @include lg {
+      width: 490px;
+    }
+  }
+}
