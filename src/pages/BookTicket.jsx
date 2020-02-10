@@ -15,7 +15,9 @@ const BookTicket = ({ match }) => {
   if (Object.keys(plays).length && !selectedPlay) {
     return <Redirect to="/bestill" />;
   }
-  const { dateField } = selectedPlay;
+
+  const { dateField } = selectedPlay || {};
+
   return (
     <div className="container">
       <Title size="md">{dateField} </Title>
