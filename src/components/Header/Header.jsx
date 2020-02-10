@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import NavItem from '../NavItem/NavItem';
 
 const Header = props => {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,7 +32,7 @@ const Header = props => {
 
   const paths = {
     Hjem: '/',
-    Billetter: '/bestill',
+    Billetter: '/bestill'
   };
   return (
     <header
@@ -40,29 +41,29 @@ const Header = props => {
       style={{ height: collapsed ? 'auto' : '48px' }}
     >
       <nav>
-        <h2 className="brand">
-          <Link to="/">Lambertrevyen 2020</Link>
+        <h2 className='brand'>
+          <Link to='/'>Lambertrevyen 2020</Link>
         </h2>
-        <div className="hide-on-md-and-down">
-          <ul className="navigation">
-            {Object.entries(paths).map(([name, path]) => (
-              <li>
-                <Link to={path}>{name}</Link>
-              </li>
+        <div className='hide-on-md-and-down'>
+          <ul className='navigation'>
+            {Object.entries(paths).map(([name, path], i) => (
+              <NavItem key={i} path={path}>
+                {name}
+              </NavItem>
             ))}
           </ul>
         </div>
 
-        <div className="hide-on-lg-and-up">
-          <MdMenu className="menu-toggle" onClick={handleOpen} />
+        <div className='hide-on-lg-and-up'>
+          <MdMenu className='menu-toggle' onClick={handleOpen} />
         </div>
       </nav>
       {collapsed && (
-        <ul className="mobile-item">
-          {Object.entries(paths).map(([name, path]) => (
-            <li>
-              <Link to={path}>{name}</Link>
-            </li>
+        <ul className='mobile-item'>
+          {Object.entries(paths).map(([name, path], i) => (
+            <NavItem key={i} path={path}>
+              {name}
+            </NavItem>
           ))}
         </ul>
       )}
