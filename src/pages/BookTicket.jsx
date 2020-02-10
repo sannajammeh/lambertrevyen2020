@@ -1,11 +1,21 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { Title } from '../components/Title/Title';
 import { Input, IconInput } from '../components/Input/Input';
 import { FaMailBulk } from 'react-icons/fa';
+import { PlaysContext } from '../context/plays';
 
 const BookTicket = ({ match }) => {
-  console.log(match);
+  const { state } = React.useContext(PlaysContext);
+  const { plays } = state;
+  const { id } = match.params;
+
+  const selectedPlay = plays[id];
+
+  if (Object.keys(plays).length && !selectedPlay) {
+    return <Redirect to="/bestill" />;
+  }
+
   return (
     <div className="container">
       <Title size="md">20 Feb </Title>
