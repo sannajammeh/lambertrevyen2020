@@ -15,10 +15,10 @@ const BookTicket = ({ match }) => {
   if (Object.keys(plays).length && !selectedPlay) {
     return <Redirect to="/bestill" />;
   }
-
+  const { dateField } = selectedPlay;
   return (
     <div className="container">
-      <Title size="md">20 Feb </Title>
+      <Title size="md">{dateField} </Title>
       <IconInput icon={FaMailBulk} placeholder="Epost Addresse" />
       <Input placeholder="Navn" />
       <Input placeholder="Navn" />
