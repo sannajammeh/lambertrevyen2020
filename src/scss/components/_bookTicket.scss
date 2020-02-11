@@ -1,0 +1,11 @@
+.BookTicket {
+  form {
+    margin: 0 auto;
+    @include md {
+      width: 80%;
+    }
+    @include lg {
+      width: 70%;
+    }
+  }
+}
