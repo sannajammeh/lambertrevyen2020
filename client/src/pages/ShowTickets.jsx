@@ -1,9 +1,11 @@
 import React from 'react';
 import { Title } from '../components/Title/Title';
 import Ticket from '../components/Ticket/Ticket';
-// Context
-import { PlaysContext } from '../context/plays';
 import spinner from '../components/Spinner/Spinner';
+//Redux
+import { connect } from 'react-redux';
+import { selectPlaysFetching, selectPlays } from '../redux/plays/plays.selectors';
+import { createStructuredSelector } from 'reselect';
 
 const RenderTickets = ({ data }) => (
   <>
@@ -18,9 +20,7 @@ const RenderTickets = ({ data }) => (
 
 const TicketsWithSpinner = spinner(RenderTickets);
 
-const ShowTicket = () => {
-  const { state } = React.useContext(PlaysContext);
-  const { isFetching, plays } = state;
+const ShowTicket = ({ isFetching, plays }) => {
   const playsArray = Object.values(plays);
 
   return (
@@ -32,4 +32,9 @@ const ShowTicket = () => {
 
 ShowTicket.propTypes = {};
 
-export default ShowTicket;
+const mapStateToProps = createStructuredSelector({
+  isFetching: selectPlaysFetching,
+  plays: selectPlays,
+});
+
+export default connect()(ShowTicket);

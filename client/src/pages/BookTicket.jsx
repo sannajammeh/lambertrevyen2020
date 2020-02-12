@@ -1,15 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import { IconInput } from '../components/Input/Input';
 import { FaMailBulk, FaUser, FaPhone } from 'react-icons/fa';
-import { PlaysContext } from '../context/plays';
 import SelectPrice from '../components/Select/SelectPrice';
 import TicketData from '../components/TicketData/TicketData';
 import { formatToNOK } from '../utils/format';
 
 const BookTicket = ({ match }) => {
-  const { state } = React.useContext(PlaysContext);
-  const { plays, isFetching } = state;
+  const { plays, isFetching } = {};
   const { id } = match.params;
 
   const selectedPlay = plays[id];
@@ -110,4 +109,7 @@ const BookTicket = ({ match }) => {
   );
 };
 
+BookTicket.propTypes = {
+  match: PropTypes.object.isRequired,
+};
 export default withRouter(BookTicket);

@@ -1,56 +1,63 @@
-import React, { useMemo, useReducer, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import Header from './components/Header/Header';
 import ShowTickets from './pages/ShowTickets';
 import BookTicket from './pages/BookTicket';
-import { fetchPerformances, normalizeData } from './firebase/firebase.utils';
-// GState
-import {
-  PlaysContext,
-  playsReducer,
-  initialState,
-  fetchPlaysStart,
-  fetchPlaysSuccess,
-  fetchPlaysFailure,
-} from './context/plays';
+import { convertSnapshot, normalizeData, firestore } from './firebase/firebase.utils';
+//Redux
+import { connect } from 'react-redux';
+import { fetchPlaysSuccess, fetchPlaysStart, fetchPlaysFailure } from './redux/plays/plays.actions';
 
-function App() {
-  //Store Setup
-  const [state, dispatch] = useReducer(playsReducer, initialState);
-  const store = useMemo(() => {
-    return { state, dispatch };
-  }, [state, dispatch]);
-
+function App({ fetchPlaysStart, fetchPlaysSuccess, fetchPlaysFailure }) {
   useEffect(() => {
-    const asyncFetchPlays = async () => {
-      try {
-        dispatch(fetchPlaysStart());
+    fetchPlaysStart();
 
-        const result = await fetchPerformances();
+    const unsubscribe = firestore
+      .collection('performances')
+      .orderBy('date', 'asc')
+      .onSnapshot(
+        snapshot => {
+          const { docs } = snapshot;
 
-        dispatch(fetchPlaysSuccess(normalizeData(result)));
-      } catch (err) {
-        dispatch(fetchPlaysFailure(err.message));
-      }
+          const result = convertSnapshot(docs);
+
+          fetchPlaysSuccess(normalizeData(result));
+        },
+        error => {
+          fetchPlaysFailure(error.message);
+        }
+      );
+
+    return () => {
+      unsubscribe();
     };
-
-    asyncFetchPlays();
   }, []);
 
   return (
     <div>
-      <PlaysContext.Provider value={store}>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/bestill" component={ShowTickets} />
-          <Route path="/bestill/:id" component={BookTicket} />
-        </Switch>
-      </PlaysContext.Provider>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/bestill" component={ShowTickets} />
+        <Route path="/bestill/:id" component={BookTicket} />
+      </Switch>
     </div>
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  fetchPlaysStart: () => dispatch(fetchPlaysStart),
+  fetchPlaysSuccess: () => dispatch(fetchPlaysSuccess),
+  fetchPlaysFailure: () => dispatch(fetchPlaysFailure),
+});
+
+export default connect(null, mapDispatchToProps)(App);
+
+App.propTypes = {
+  fetchPlaysStart: PropTypes.func.isRequired,
+  fetchPlaysSuccess: PropTypes.func.isRequired,
+  fetchPlaysFailure: PropTypes.func.isRequired,
+};

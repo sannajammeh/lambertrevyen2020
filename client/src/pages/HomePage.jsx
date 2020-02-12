@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import HeroImg from '../components/HeroImg/HeroImg';
 import { useHistory } from 'react-router-dom';
 
-const HomePage = props => {
+const HomePage = () => {
   const history = useHistory();
   return (
     <div className="container HomePage">
@@ -18,7 +17,5 @@ const HomePage = props => {
     </div>
   );
 };
-
-HomePage.propTypes = {};
 
 export default HomePage;

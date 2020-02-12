@@ -25,12 +25,9 @@ export const fetchPerformances = async () => {
   const results = ref.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   return results;
 };
-
-export const fetchPlayPrices = async () => {
-  const ref = await firestore.collection('prices').get();
-
-  const results = ref.docs.map(price => ({ id: price.id, ...price.data() }));
-  return results;
+export const convertSnapshot = docs => {
+  const result = docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return result;
 };
 export const normalizeData = data => {
   const result = {};
