@@ -27,10 +27,6 @@ const BookTicket = ({ match }) => {
   };
 
   const [formData, setFormData] = React.useState(initialState);
-  //REMOVE THIS
-  React.useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   // No URL param
   if (Object.keys(plays).length && !selectedPlay) {
