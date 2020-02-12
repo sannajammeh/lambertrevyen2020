@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 //Redux
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+// LogRocket
+import LogRocket from 'logrocket';
+LogRocket.init('bdtmpv/lambertrevyen-2020');
 
 ReactDOM.render(
   <BrowserRouter>

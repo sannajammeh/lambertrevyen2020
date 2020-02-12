@@ -1,9 +1,11 @@
 'use strict';
 
-import TicketService from '../services/ticketService';
-
 export const GetTickets = TicketService => async (req, res) => {
-  const tickets = await TicketService.fetchTickets();
-
-  return res.send(...tickets);
+  try {
+    const tickets = await TicketService.fetchTickets();
+    return res.send(...tickets);
+  } catch (error) {
+    console.error(error.message);
+    return res.sendStatus(500);
+  }
 };

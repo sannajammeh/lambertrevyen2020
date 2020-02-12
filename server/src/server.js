@@ -2,8 +2,9 @@
 import express from 'express';
 import Api from './Routes/api';
 
-export function server(dependencies) {
+export function server(dep) {
   const app = express();
+
   app.use('/api', Api);
 
   app.listen(5000, port => {

@@ -1,8 +1,8 @@
 'use strict';
 
 class TicketService {
-  constructor(firestore) {
-    this.firestore = firestore;
+  constructor(firebaseAdmin) {
+    this.firestore = firebaseAdmin;
   }
 
   async fetchTickets() {

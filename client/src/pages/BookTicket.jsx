@@ -7,10 +7,7 @@ import SelectPrice from '../components/Select/SelectPrice';
 import TicketData from '../components/TicketData/TicketData';
 import { formatToNOK } from '../utils/format';
 import { createStructuredSelector } from 'reselect';
-import {
-  selectPlays,
-  selectPlaysFetching
-} from '../redux/plays/plays.selectors';
+import { selectPlays, selectPlaysFetching } from '../redux/plays/plays.selectors';
 import { connect } from 'react-redux';
 
 const TicketDataMemo = React.memo(TicketData);
@@ -30,7 +27,7 @@ const BookTicket = ({ match, plays, isFetching }) => {
     email: '',
     phone: '',
     price: '',
-    tickets: {}
+    tickets: {},
   };
 
   const [formData, setFormData] = React.useState(initialState);
@@ -62,10 +59,10 @@ const BookTicket = ({ match, plays, isFetching }) => {
 
   // No URL param
   if (Object.keys(plays).length && !selectedPlay) {
-    return <Redirect to='/bestill' />;
+    return <Redirect to="/bestill" />;
   }
   return (
-    <div className='container BookTicket'>
+    <div className="container BookTicket">
       <form onSubmit={handleSubmit}>
         <TicketDataMemo
           isLoading={isFetching}
@@ -75,34 +72,34 @@ const BookTicket = ({ match, plays, isFetching }) => {
           clock={clock}
         />
         <IconInputMemo
-          type='text'
-          name='name'
+          type="text"
+          name="name"
           icon={FaUser}
-          placeholder='Navn'
+          placeholder="Navn"
           value={name}
           onChange={handleChange}
           required
         />
         <IconInputMemo
-          type='email'
-          name='email'
+          type="email"
+          name="email"
           icon={FaMailBulk}
-          placeholder='Epost Addresse'
+          placeholder="Epost Addresse"
           value={email}
           onChange={handleChange}
           required
         />
         <IconInputMemo
           icon={FaPhone}
-          type='number'
-          name='phone'
-          placeholder='Telefon nummer'
+          type="number"
+          name="phone"
+          placeholder="Telefon nummer"
           value={phone}
           onChange={handleChange}
           required
         />
-        <hr className='break' />
-        <div className='mb-3'>
+        <hr className="break" />
+        <div className="mb-3">
           {prices.map(obj => (
             <SelectPrice
               label={`${obj.name} kr ${obj.price},-`}
@@ -112,9 +109,9 @@ const BookTicket = ({ match, plays, isFetching }) => {
               required={!getTotal}
             />
           ))}
-          <h3 className='m-0'>Sum totalt: {formatToNOK(getTotal)}</h3>
+          <h3 className="m-0">Sum totalt: {formatToNOK(getTotal)}</h3>
         </div>
-        <button className='button brand u-full-width' type='submit'>
+        <button className="button brand u-full-width" type="submit">
           Reserver billett
         </button>
       </form>
@@ -125,12 +122,12 @@ const BookTicket = ({ match, plays, isFetching }) => {
 BookTicket.propTypes = {
   match: PropTypes.object.isRequired,
   plays: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   plays: selectPlays,
-  isFetching: selectPlaysFetching
+  isFetching: selectPlaysFetching,
 });
 
 export default withRouter(connect(mapStateToProps)(BookTicket));
