@@ -15,10 +15,11 @@
   }
   &.inverted {
     background: $light;
-    color: #999999;
+    color: #26262b;
   }
-  &-brand {
-    background-color: #e75870;
+  &.brand {
+    // background-color: #e75870;
+    background-color: $purple-dark;
     color: $text-on-primary;
   }
   &.outlined {

@@ -2,6 +2,7 @@ import { createContext } from 'react';
 
 export const FETCH_PLAYS_START = 'FETCH_PLAYS_START';
 export const FETCH_PLAYS_SUCCESS = 'FETCH_PLAYS_SUCCESS';
+export const FETCH_PRICES_SUCCESS = 'FETCH_PRICES_SUCCESS';
 export const FETCH_PLAYS_FAILURE = 'FETCH_PLAYS_FAILURE';
 
 export const initialState = {
@@ -15,6 +16,10 @@ export const fetchPlaysStart = () => ({
 });
 export const fetchPlaysSuccess = payload => ({
   type: FETCH_PLAYS_SUCCESS,
+  payload,
+});
+export const fetchPricesSuccess = payload => ({
+  type: FETCH_PRICES_SUCCESS,
   payload,
 });
 export const fetchPlaysFailure = errorMessage => ({
@@ -36,6 +41,7 @@ export const playsReducer = (state, action) => {
         isFetching: false,
       };
     case FETCH_PLAYS_FAILURE:
+      console.error(action.payload);
       return {
         ...state,
         error: action.payload,

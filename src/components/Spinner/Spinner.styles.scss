@@ -4,6 +4,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  &.inline {
+    height: auto;
+    margin: 2rem 0;
+  }
 }
 .spinner-container {
   display: inline-block;

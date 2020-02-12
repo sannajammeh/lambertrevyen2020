@@ -24,17 +24,19 @@ function App() {
   }, [state, dispatch]);
 
   useEffect(() => {
-    const asyncInit = async () => {
+    const asyncFetchPlays = async () => {
       try {
         dispatch(fetchPlaysStart());
 
         const result = await fetchPerformances();
+
         dispatch(fetchPlaysSuccess(normalizeData(result)));
       } catch (err) {
         dispatch(fetchPlaysFailure(err.message));
       }
     };
-    asyncInit();
+
+    asyncFetchPlays();
   }, []);
 
   return (

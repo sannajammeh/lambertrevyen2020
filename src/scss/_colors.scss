@@ -1,16 +1,17 @@
 $red: #bf1d2c;
 // $red: rgb(197, 93, 115);
 $pink-muted: #e75870;
+$purple-dark: #32325d;
 // $light: #ebe9d0;
-$light: #eae6e4;
+$light: #f7f8f9;
 $light-accent: #d9d6af;
 $gray: #d6ced5;
 $dark: #13131d;
 
-$primary: $red;
+$primary: $purple-dark;
 $primary-accent: $pink-muted;
 $text-on-primary: $light;
-$text-on-background: $red;
+$text-on-background: $primary;
 $text-on-primary-accent: $light-accent;
 
 //Themes

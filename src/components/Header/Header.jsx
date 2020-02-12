@@ -29,10 +29,12 @@ const Header = props => {
   const handleOpen = () => {
     setCollapsed(!collapsed);
   };
-
+  const dismissNav = () => {
+    setCollapsed(false);
+  };
   const paths = {
     Hjem: '/',
-    Billetter: '/bestill'
+    Billetter: '/bestill',
   };
   return (
     <header
@@ -41,25 +43,25 @@ const Header = props => {
       style={{ height: collapsed ? 'auto' : '48px' }}
     >
       <nav>
-        <h2 className='brand'>
-          <Link to='/'>Lambertrevyen 2020</Link>
+        <h2 className="brand">
+          <Link to="/">Lambertrevyen 2020</Link>
         </h2>
-        <div className='hide-on-md-and-down'>
-          <ul className='navigation'>
+        <div className="hide-on-md-and-down">
+          <ul className="navigation">
             {Object.entries(paths).map(([name, path], i) => (
-              <NavItem key={i} path={path}>
+              <NavItem key={i} path={path} onClick={dismissNav}>
                 {name}
               </NavItem>
             ))}
           </ul>
         </div>
 
-        <div className='hide-on-lg-and-up'>
-          <MdMenu className='menu-toggle' onClick={handleOpen} />
+        <div className="hide-on-lg-and-up">
+          <MdMenu className="menu-toggle" onClick={handleOpen} />
         </div>
       </nav>
       {collapsed && (
-        <ul className='mobile-item'>
+        <ul className="mobile-item">
           {Object.entries(paths).map(([name, path], i) => (
             <NavItem key={i} path={path}>
               {name}

@@ -23,10 +23,15 @@ export const fetchPerformances = async () => {
     .get();
 
   const results = ref.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  normalizeData(results);
   return results;
 };
 
+export const fetchPlayPrices = async () => {
+  const ref = await firestore.collection('prices').get();
+
+  const results = ref.docs.map(price => ({ id: price.id, ...price.data() }));
+  return results;
+};
 export const normalizeData = data => {
   const result = {};
   for (const { id, ...values } of data) {
