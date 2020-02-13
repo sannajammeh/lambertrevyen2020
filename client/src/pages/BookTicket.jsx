@@ -7,21 +7,39 @@ import { FaMailBulk, FaUser, FaPhone } from 'react-icons/fa';
 import SelectPrice from '../components/Select/SelectPrice';
 import TicketData from '../components/TicketData/TicketData';
 import { formatToNOK } from '../utils/format';
+// Error types
+import {
+  BAD_REQUEST,
+  PLAY_IS_BOOKED,
+  PLAY_NOT_ENOUGH_SEATS,
+  VALIDATION_ERROR
+} from '../utils/error.types';
 // Redux
 import { createStructuredSelector } from 'reselect';
-import { selectPlays, selectPlaysFetching } from '../redux/plays/plays.selectors';
+import {
+  selectPlays,
+  selectPlaysFetching
+} from '../redux/plays/plays.selectors';
 import { connect } from 'react-redux';
+import {
+  bookTicketStart,
+  bookTicketSuccess,
+  bookTicketFailure
+} from '../redux/tickets/tickets.actions';
+import {
+  selectTicketLoading,
+  selectTicketErr
+} from '../redux/tickets/tickets.selectors';
 
 const TicketDataMemo = React.memo(TicketData);
 const IconInputMemo = React.memo(IconInput);
 
-const BookTicket = ({ match, plays, isFetching }) => {
+const BookTicket = ({ match, plays, isFetching, dispatch }) => {
   const { id } = match.params;
 
-  const selectedPlay = plays[id];
-
   // Get Play data
-  const { dateField, title, clock, prices = [] } = selectedPlay || {};
+  const selectedPlay = plays[id];
+  const { dateField, title, clock, prices = [], count } = selectedPlay || {};
 
   // Handle Form
   const initialState = {
@@ -32,6 +50,8 @@ const BookTicket = ({ match, plays, isFetching }) => {
     price: '',
     tickets: {},
     emailConfirmErr: '',
+    nameErr: '',
+    phoneErr: ''
   };
 
   const [formData, setFormData] = React.useState(initialState);
@@ -47,13 +67,23 @@ const BookTicket = ({ match, plays, isFetching }) => {
     setFormData({ ...formData, tickets: { ...tickets, [name]: value } });
   };
 
-  const { name, email, emailConfirm, emailConfirmErr, phone, tickets } = formData;
+  const {
+    name,
+    email,
+    emailConfirm,
+    emailConfirmErr,
+    phone,
+    tickets
+  } = formData;
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     if (email !== emailConfirm)
-      return setFormData({ ...formData, emailConfirmErr: 'Epost adresse er ikke lik' });
+      return setFormData({
+        ...formData,
+        emailConfirmErr: 'Epost adresse er ikke lik'
+      });
 
     const requestData = {
       name,
@@ -61,19 +91,51 @@ const BookTicket = ({ match, plays, isFetching }) => {
       phone,
       playId: selectedPlay.id,
       date: selectedPlay.dateField,
-      tickets,
+      tickets
     };
     const requestObj = {
       url: 'http://localhost:5000/api/tickets/',
       method: 'POST',
-      data: requestData,
+      data: requestData
     };
 
     try {
-      const result = await Axios(requestObj);
-      console.log('TCL: BookTicket -> result', result);
+      dispatch(bookTicketStart());
+      const response = await Axios(requestObj);
+      console.log('TCL: BookTicket -> result', response);
+      dispatch(bookTicketSuccess(response));
     } catch (err) {
-      console.error(err.message);
+      if (err.response.data) {
+        const { data } = err.response;
+        const { type } = data;
+
+        switch (type) {
+          case VALIDATION_ERROR:
+            const { fields } = data;
+            // Create normalized Data
+            const errFields = {};
+            fields.forEach(({ name, message }) => {
+              errFields[name] = { name, message };
+            });
+            return dispatch(bookTicketFailure({ fields: errFields }));
+          case PLAY_NOT_ENOUGH_SEATS:
+            return dispatch(
+              bookTicketFailure({ message: `Det er kun ${count} seter igjen.` })
+            );
+          default:
+            return dispatch(
+              bookTicketFailure({
+                message: 'En feil oppstod under bestillingen'
+              })
+            );
+        }
+      }
+
+      return dispatch(
+        bookTicketFailure({
+          message: 'En feil oppstod under bestillingen'
+        })
+      );
     }
   };
 
@@ -86,10 +148,10 @@ const BookTicket = ({ match, plays, isFetching }) => {
 
   // No URL param
   if (Object.keys(plays).length && !selectedPlay) {
-    return <Redirect to="/bestill" />;
+    return <Redirect to='/bestill' />;
   }
   return (
-    <div className="container BookTicket">
+    <div className='container BookTicket'>
       <form onSubmit={handleSubmit}>
         <TicketDataMemo
           isLoading={isFetching}
@@ -99,44 +161,44 @@ const BookTicket = ({ match, plays, isFetching }) => {
           clock={clock}
         />
         <IconInputMemo
-          type="text"
-          name="name"
+          type='text'
+          name='name'
           icon={FaUser}
-          placeholder="Navn"
+          placeholder='Navn'
           value={name}
           onChange={handleChange}
           required
         />
         <IconInputMemo
-          type="email"
-          name="email"
+          type='email'
+          name='email'
           icon={FaMailBulk}
-          placeholder="Epost addresse"
+          placeholder='Epost addresse'
           value={email}
           onChange={handleChange}
           required
         />
         <IconInputMemo
-          type="email"
-          name="emailConfirm"
+          type='email'
+          name='emailConfirm'
           invalid={emailConfirmErr}
           icon={FaMailBulk}
-          placeholder="Bekreft epost addresse"
+          placeholder='Bekreft epost addresse'
           value={emailConfirm}
           onChange={handleChange}
           required
         />
         <IconInputMemo
           icon={FaPhone}
-          type="number"
-          name="phone"
-          placeholder="Telefon nummer"
+          type='number'
+          name='phone'
+          placeholder='Telefon nummer'
           value={phone}
           onChange={handleChange}
           required
         />
-        <hr className="break" />
-        <div className="mb-3">
+        <hr className='break' />
+        <div className='mb-3'>
           {prices.map(obj => (
             <SelectPrice
               label={`${obj.name} kr ${obj.price},-`}
@@ -146,9 +208,9 @@ const BookTicket = ({ match, plays, isFetching }) => {
               required={!getTotal}
             />
           ))}
-          <h3 className="m-0">Sum totalt: {formatToNOK(getTotal)}</h3>
+          <h3 className='m-0'>Sum totalt: {formatToNOK(getTotal)}</h3>
         </div>
-        <button className="button brand u-full-width" type="submit">
+        <button className='button brand u-full-width' type='submit'>
           Reserver billett
         </button>
       </form>
@@ -159,12 +221,20 @@ const BookTicket = ({ match, plays, isFetching }) => {
 BookTicket.propTypes = {
   match: PropTypes.object.isRequired,
   plays: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({
   plays: selectPlays,
   isFetching: selectPlaysFetching,
+  formErrors: selectTicketErr,
+  isTicketFetching: selectTicketLoading
 });
+
+// const mapDispatchToProps = {
+//   bookTicketStart,
+//   bookTicketSuccess,
+//   bookTicketFailure
+// };
 
 export default withRouter(connect(mapStateToProps)(BookTicket));

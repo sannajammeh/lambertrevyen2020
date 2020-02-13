@@ -1,6 +1,14 @@
-import { BAD_REQUEST, PLAY_IS_BOOKED, PLAY_NOT_ENOUGH_SEATS, PLAY_NOT_EXIST } from '../error.types';
+'use strict';
+import {
+  BAD_REQUEST,
+  PLAY_IS_BOOKED,
+  PLAY_NOT_ENOUGH_SEATS,
+  PLAY_NOT_EXIST,
+  VALIDATION_ERROR
+} from '../error.types';
 
-export const HandleTicketErrors = (err, req, res, next) => {
+export const TicketsErrorHandler = (err, req, res, next) => {
+  console.log(JSON.stringify(err));
   switch (err.message) {
     case BAD_REQUEST:
       return res.status(400).json({ msg: err.message });
@@ -13,6 +21,11 @@ export const HandleTicketErrors = (err, req, res, next) => {
 
     case PLAY_NOT_EXIST:
       return res.status(400).json({ type: PLAY_NOT_EXIST });
+
+    case VALIDATION_ERROR:
+      return res
+        .status(400)
+        .json({ type: VALIDATION_ERROR, fields: err.fields });
 
     default:
       return res.status(400).json({ msg: err.message });
