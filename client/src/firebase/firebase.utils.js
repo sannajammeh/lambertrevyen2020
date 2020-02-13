@@ -16,7 +16,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const firestore = firebase.firestore();
 
-export const fetchPerformances = async () => {
+export const fetchPlays = async () => {
   const ref = await firestore
     .collection('performances')
     .orderBy('date', 'asc')

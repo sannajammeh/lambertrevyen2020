@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import Axios from 'axios';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import { IconInput } from '../components/Input/Input';
@@ -6,6 +7,7 @@ import { FaMailBulk, FaUser, FaPhone } from 'react-icons/fa';
 import SelectPrice from '../components/Select/SelectPrice';
 import TicketData from '../components/TicketData/TicketData';
 import { formatToNOK } from '../utils/format';
+// Redux
 import { createStructuredSelector } from 'reselect';
 import { selectPlays, selectPlaysFetching } from '../redux/plays/plays.selectors';
 import { connect } from 'react-redux';
@@ -25,16 +27,18 @@ const BookTicket = ({ match, plays, isFetching }) => {
   const initialState = {
     name: '',
     email: '',
+    emailConfirm: '',
     phone: '',
     price: '',
     tickets: {},
+    emailConfirmErr: '',
   };
 
   const [formData, setFormData] = React.useState(initialState);
 
   const handleChange = e => {
     const { value, name } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value, emailConfirmErr: '' });
   };
 
   const handleSelectChange = e => {
@@ -43,12 +47,35 @@ const BookTicket = ({ match, plays, isFetching }) => {
     setFormData({ ...formData, tickets: { ...tickets, [name]: value } });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(formData);
-  };
+  const { name, email, emailConfirm, emailConfirmErr, phone, tickets } = formData;
 
-  const { name, email, phone, tickets } = formData;
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    if (email !== emailConfirm)
+      return setFormData({ ...formData, emailConfirmErr: 'Epost adresse er ikke lik' });
+
+    const requestData = {
+      name,
+      email,
+      phone,
+      playId: selectedPlay.id,
+      date: selectedPlay.dateField,
+      tickets,
+    };
+    const requestObj = {
+      url: 'http://localhost:5000/api/tickets/',
+      method: 'POST',
+      data: requestData,
+    };
+
+    try {
+      const result = await Axios(requestObj);
+      console.log('TCL: BookTicket -> result', result);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   const getTotal = useMemo(() => {
     return prices.reduce((acc, value) => {
@@ -84,8 +111,18 @@ const BookTicket = ({ match, plays, isFetching }) => {
           type="email"
           name="email"
           icon={FaMailBulk}
-          placeholder="Epost Addresse"
+          placeholder="Epost addresse"
           value={email}
+          onChange={handleChange}
+          required
+        />
+        <IconInputMemo
+          type="email"
+          name="emailConfirm"
+          invalid={emailConfirmErr}
+          icon={FaMailBulk}
+          placeholder="Bekreft epost addresse"
+          value={emailConfirm}
           onChange={handleChange}
           required
         />

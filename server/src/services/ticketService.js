@@ -35,7 +35,7 @@ class TicketService {
     const newSeatCount = seatCount + requestedSeats;
 
     //Check for errors
-    if (isNaN(requestedSeats)) throw new Error(BAD_REQUEST);
+    if (isNaN(requestedSeats) || !requestedSeats) throw new Error(BAD_REQUEST);
     if (seatCount >= max) throw new Error(PLAY_IS_BOOKED);
     if (newSeatCount >= max) throw new Error(PLAY_NOT_ENOUGH_SEATS);
 
