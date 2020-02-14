@@ -7,6 +7,7 @@ import {
   FaPrint,
   FaCalendarDay,
   FaClock,
+  FaMapMarkerAlt,
 } from 'react-icons/fa';
 //Redux
 import { createStructuredSelector } from 'reselect';
@@ -45,7 +46,10 @@ const BookingData = ({ ticket, plays }) => {
             <FaInfoCircle /> Info
           </h2>
           <div className="bookingData_item">
-            <FaCalendarDay /> {dateField} <FaClock /> {clock}{' '}
+            <FaCalendarDay /> {dateField} <FaClock /> {clock}
+          </div>
+          <div className="bookingData_item">
+            <FaMapMarkerAlt /> Cecilie Thoresens vei 6, 1153 OSLO
           </div>
           <div className="bookingData_item">
             <b>Billettkode:</b> {id}

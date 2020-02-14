@@ -40,7 +40,7 @@ class TicketService {
     if (newSeatCount > max) throw new Error(PLAY_NOT_ENOUGH_SEATS);
 
     const uid = shortid.generate();
-    const ref = await this.firestore.collection('toclets').doc(uid);
+    const ref = await this.firestore.collection('tickets').doc(uid);
 
     const writeRef = await ref.set({
       name,
