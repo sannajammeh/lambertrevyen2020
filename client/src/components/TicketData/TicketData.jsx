@@ -1,9 +1,9 @@
 import React from 'react';
-import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaChair } from 'react-icons/fa';
 import spinner from '../Spinner/Spinner';
 import { Title } from '../Title/Title';
 
-const TicketData = ({ title, date, clock }) => {
+const TicketData = ({ seats, title, date, clock }) => {
   return (
     <div className="ticketData">
       <Title size="sm">{title}</Title>
@@ -13,6 +13,9 @@ const TicketData = ({ title, date, clock }) => {
       </div>
       <div className="ticketDesc">
         <FaClock /> {clock}
+      </div>
+      <div className="ticketDesc">
+        <FaChair /> Tilgjengelige seter: {seats}
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ a {
   color: inherit;
 }
 .container {
+  margin-bottom: 3rem;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -87,4 +88,10 @@ hr.break {
 
 .u-full-width {
   width: 100%;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }

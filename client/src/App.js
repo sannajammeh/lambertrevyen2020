@@ -1,32 +1,24 @@
-import React, { Component } from 'react';
+import React, { Suspense, lazy, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from './pages/HomePage';
-import Header from './components/Header/Header';
-import ShowTickets from './pages/ShowTickets';
-import BookTicket from './pages/BookTicket';
-import {
-  convertSnapshot,
-  normalizeData,
-  firestore
-} from './firebase/firebase.utils';
+import { convertSnapshot, normalizeData, firestore } from './firebase/firebase.utils';
 //Redux
 import { connect } from 'react-redux';
-import {
-  fetchPlaysSuccess,
-  fetchPlaysStart,
-  fetchPlaysFailure
-} from './redux/plays/plays.actions';
+import { fetchPlaysSuccess, fetchPlaysStart, fetchPlaysFailure } from './redux/plays/plays.actions';
+// Components
+import Header from './components/Header/Header';
+
+// Page Components
+const HomePage = lazy(() => import('./pages/HomePage'));
+const SuccessPage = lazy(() => import('./pages/SuccessPage'));
+const BookTicket = lazy(() => import('./pages/BookTicket'));
+const ShowTickets = lazy(() => import('./pages/ShowTickets'));
 
 class App extends Component {
   unsubscribe = undefined;
   componentDidMount() {
-    const {
-      fetchPlaysStart,
-      fetchPlaysSuccess,
-      fetchPlaysFailure
-    } = this.props;
+    const { fetchPlaysStart, fetchPlaysSuccess, fetchPlaysFailure } = this.props;
     fetchPlaysStart();
 
     this.unsubscribe = firestore
@@ -52,14 +44,17 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/bestill' component={ShowTickets} />
-          <Route path='/bestill/:id' component={BookTicket} />
-        </Switch>
-      </div>
+      <Suspense fallback={<div></div>}>
+        <div>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/bestill" component={ShowTickets} />
+            <Route path="/bestill/:id" component={BookTicket} />
+            <Route path="/success" component={SuccessPage} />
+          </Switch>
+        </div>
+      </Suspense>
     );
   }
 }
@@ -67,7 +62,7 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   fetchPlaysStart: () => dispatch(fetchPlaysStart()),
   fetchPlaysSuccess: data => dispatch(fetchPlaysSuccess(data)),
-  fetchPlaysFailure: err => dispatch(fetchPlaysFailure(err))
+  fetchPlaysFailure: err => dispatch(fetchPlaysFailure(err)),
 });
 
 export default connect(null, mapDispatchToProps)(App);
@@ -75,5 +70,5 @@ export default connect(null, mapDispatchToProps)(App);
 App.propTypes = {
   fetchPlaysStart: PropTypes.func.isRequired,
   fetchPlaysSuccess: PropTypes.func.isRequired,
-  fetchPlaysFailure: PropTypes.func.isRequired
+  fetchPlaysFailure: PropTypes.func.isRequired,
 };

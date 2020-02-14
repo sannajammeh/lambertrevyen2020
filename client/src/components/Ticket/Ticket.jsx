@@ -1,7 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-const Ticket = ({ id, title = '', dateField = '', clock = '', match, history }) => {
+const Ticket = ({ count, id, title = '', dateField = '', clock = '', match, history }) => {
+  const maxSeats = 164;
+  const isSoldOut = count >= maxSeats;
   return (
     <div className="Ticket">
       <h4>{title}</h4>
@@ -9,8 +11,12 @@ const Ticket = ({ id, title = '', dateField = '', clock = '', match, history }) 
       <hr />
       <h2>{clock}</h2>
       <div className="button-holder">
-        <button onClick={() => history.push(`${match.path}/${id}`)} className="button inverted">
-          Reserver
+        <button
+          onClick={() => history.push(`${match.path}/${id}`)}
+          disabled={isSoldOut}
+          className="button inverted"
+        >
+          {!isSoldOut ? 'Reserver' : 'Utsolgt'}
         </button>
       </div>
     </div>

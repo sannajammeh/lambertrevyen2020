@@ -3,7 +3,7 @@ import './SelectPrice.styles.scss';
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
-const SelectPrice = ({ label, name, ...props }) => {
+const SelectPrice = ({ label, name, value, ...props }) => {
   return (
     <div className="selectWrapper">
       <label htmlFor={name}>{label}</label>

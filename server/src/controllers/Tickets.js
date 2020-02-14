@@ -11,7 +11,7 @@ export const GetTickets = TicketService => async (req, res, next) => {
 };
 
 export const CreateTicket = TicketService => async (req, res, next) => {
-  const { name, email, phone, playId, date, tickets } = req.body;
+  const { name, email, phone, playId, date, seats } = req.body;
 
   try {
     const ticketRef = await TicketService.createTicket({
@@ -20,7 +20,7 @@ export const CreateTicket = TicketService => async (req, res, next) => {
       phone,
       playId,
       date,
-      tickets,
+      seats,
     });
 
     const ticket = await ticketRef.get();

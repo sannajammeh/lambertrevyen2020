@@ -3,7 +3,7 @@ import Joi from '@hapi/joi';
 import { VALIDATION_ERROR } from '../error.types';
 
 const validateOptions = {
-  abortEarly: false
+  abortEarly: false,
 };
 
 const validate = schema => (req, res, next) => {
@@ -34,7 +34,7 @@ export const createTicketSchema = Joi.object({
     .max(8),
   playId: Joi.string().required(),
   date: Joi.string().required(),
-  tickets: Joi.object().required()
+  seats: Joi.object().required(),
 });
 
 export default validate;
