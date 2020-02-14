@@ -14,7 +14,13 @@ class TicketService {
     const tickets = ref.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return tickets;
   }
-
+  async fetchTicket(id) {
+    const ref = await this.firestore
+      .collection('tickets')
+      .doc(id)
+      .get();
+    return ref.data();
+  }
   async createTicket({ name, email, phone, playId, date, seats }) {
     const max = 164; // Max seat count
 
@@ -33,6 +39,8 @@ class TicketService {
 
     // Calc new seat count
     const newSeatCount = seatCount + requestedSeats;
+    // Calc total amount
+    const total = this.calculateTotal(playData.prices, seats);
 
     //Check for errors
     if (isNaN(requestedSeats) || !requestedSeats) throw new Error(BAD_REQUEST);
@@ -50,6 +58,7 @@ class TicketService {
       date,
       status: 'unpaid',
       seats,
+      total,
       createdAt: this.serverTime,
     });
 
@@ -63,6 +72,12 @@ class TicketService {
       count += value ? Number(value) : 0;
     }
     return count;
+  }
+  calculateTotal(prices, seats) {
+    return prices.reduce((acc, value) => {
+      const amount = seats[value.id] || 0;
+      return acc + value.price * amount;
+    }, 0);
   }
 }
 
