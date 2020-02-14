@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
@@ -10,10 +10,10 @@ import { fetchPlaysSuccess, fetchPlaysStart, fetchPlaysFailure } from './redux/p
 import Header from './components/Header/Header';
 
 // Page Components
-const HomePage = lazy(() => import(/* webpackChunkName: "HomePage" */ './pages/HomePage'));
-const SuccessPage = lazy(() => import(/* webpackChunkName: "Success" */ './pages/SuccessPage'));
-const BookTicket = lazy(() => import(/* webpackChunkName: "BookTicket" */ './pages/BookTicket'));
-const ShowTickets = lazy(() => import(/* webpackChunkName: "ShowTickets" */ './pages/ShowTickets'));
+import HomePage from './pages/HomePage';
+import SuccessPage from './pages/SuccessPage';
+import BookTicket from './pages/BookTicket';
+import ShowTickets from './pages/ShowTickets';
 
 class App extends Component {
   unsubscribe = undefined;
@@ -44,17 +44,15 @@ class App extends Component {
 
   render() {
     return (
-      <Suspense fallback={<div></div>}>
-        <div>
-          <Header />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/bestill" component={ShowTickets} />
-            <Route path="/bestill/:id" component={BookTicket} />
-            <Route path="/success" component={SuccessPage} />
-          </Switch>
-        </div>
-      </Suspense>
+      <div>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/bestill" component={ShowTickets} />
+          <Route path="/bestill/:id" component={BookTicket} />
+          <Route path="/success" component={SuccessPage} />
+        </Switch>
+      </div>
     );
   }
 }
