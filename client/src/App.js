@@ -10,10 +10,10 @@ import { fetchPlaysSuccess, fetchPlaysStart, fetchPlaysFailure } from './redux/p
 import Header from './components/Header/Header';
 
 // Page Components
-const HomePage = lazy(() => import('./pages/HomePage'));
-const SuccessPage = lazy(() => import('./pages/SuccessPage'));
-const BookTicket = lazy(() => import('./pages/BookTicket'));
-const ShowTickets = lazy(() => import('./pages/ShowTickets'));
+const HomePage = lazy(() => /* webpack chunk-name HomePage */ import('./pages/HomePage'));
+const SuccessPage = lazy(() /* webpack chunk-name Success */ => import('./pages/SuccessPage'));
+const BookTicket = lazy(() /* webpack chunk-name Ticket */ => import('./pages/BookTicket'));
+const ShowTickets = lazy(() /* webpack chunk-name ShowTickets */ => import('./pages/ShowTickets'));
 
 class App extends Component {
   unsubscribe = undefined;
