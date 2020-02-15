@@ -103,8 +103,7 @@ const BookTicket = ({
       seats,
     };
     const requestObj = {
-      // url: 'https://api.lambertrevyen2020.no/v1/tickets',
-      url: 'http://localhost:5000/v1/tickets',
+      url: 'https://api.lambertrevyen2020.no/v1/tickets',
       method: 'POST',
       data: requestData,
     };
