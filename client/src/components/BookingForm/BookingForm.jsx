@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FaUser, FaMailBulk, FaPhone } from 'react-icons/fa';
+import { FaUser, FaMailBulk, FaPhone, FaInfoCircle } from 'react-icons/fa';
 // Utils
 import { formatToNOK } from '../../utils/format';
 import { calcTotalTicketPrice } from '../../utils/calculations';
@@ -89,6 +89,10 @@ const BookingForm = ({
       <button disabled={isSoldOut} className="button brand u-full-width" type="submit">
         {isSoldOut ? 'Forestilling er utsolgt' : 'Reserver billett'}
       </button>
+      <p className="text-center hasIcon mt-4">
+        <FaInfoCircle /> Betaling gjøres gjennom vipps ved luka på forestillingen. Billett kan også
+        forhåndsbetales. Du vil motta en epost med bekreftelse på reservasjon.
+      </p>
     </form>
   );
 };

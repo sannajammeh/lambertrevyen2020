@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter, Redirect } from 'react-router-dom';
 import TicketData from '../components/TicketData/TicketData';
 // Error types
-import {
-  PLAY_IS_BOOKED,
-  PLAY_NOT_ENOUGH_SEATS,
-  VALIDATION_ERROR
-} from '../utils/error.types';
+import { PLAY_IS_BOOKED, PLAY_NOT_ENOUGH_SEATS, VALIDATION_ERROR } from '../utils/error.types';
 // Redux
 import { createStructuredSelector } from 'reselect';
 import { selectPlays, selectPlaysFetching } from '../redux/plays/plays.selectors';
@@ -17,12 +13,11 @@ import {
   bookTicketStart,
   bookTicketSuccess,
   bookTicketFailure,
-  clearBookingErrors
+  clearBookingErrors,
 } from '../redux/tickets/tickets.actions';
 import { selectTicketLoading, selectTicketErr } from '../redux/tickets/tickets.selectors';
 import BookingForm from '../components/BookingForm/BookingForm';
 import spinner from '../components/Spinner/Spinner';
-import { FaInfoCircle } from 'react-icons/fa';
 
 const SpinnerBookingForm = spinner(BookingForm);
 const PlayDataMemo = React.memo(TicketData);
@@ -39,7 +34,7 @@ const BookTicket = ({
   isFetching,
   isTicketFetching,
   formErrors,
-  history
+  history,
 }) => {
   const { id } = match.params;
 
@@ -55,11 +50,11 @@ const BookTicket = ({
     phone: '',
     price: '',
     seats: {},
-    ...formErrors
+    ...formErrors,
   };
   const noErrState = {
     errFields: {},
-    error: false
+    error: false,
   };
 
   const [formData, setFormData] = React.useState(initialState);
@@ -84,7 +79,7 @@ const BookTicket = ({
     setFormData({
       ...formData,
       seats: { ...seats, [name]: value },
-      ...noErrState
+      ...noErrState,
     });
   };
 
@@ -96,7 +91,7 @@ const BookTicket = ({
     if (email !== emailConfirm)
       return setFormData({
         ...formData,
-        errFields: { ...errFields, email: 'Epost er ikke lik' }
+        errFields: { ...errFields, email: 'Epost er ikke lik' },
       });
 
     const requestData = {
@@ -105,12 +100,13 @@ const BookTicket = ({
       phone,
       playId: selectedPlay.id,
       date: selectedPlay.dateField,
-      seats
+      seats,
     };
     const requestObj = {
-      url: 'https://api.lambertrevyen2020.no/v1/tickets',
+      // url: 'https://api.lambertrevyen2020.no/v1/tickets',
+      url: 'http://localhost:5000/v1/tickets',
       method: 'POST',
-      data: requestData
+      data: requestData,
     };
 
     try {
@@ -137,14 +133,14 @@ const BookTicket = ({
             });
             return bookTicketFailure({
               errFields,
-              message: 'Reservasjon avvist, sjekk felter.'
+              message: 'Reservasjon avvist, sjekk felter.',
             });
 
           case PLAY_NOT_ENOUGH_SEATS:
             return bookTicketFailure({
               message: `Det er kun ${maxSeats - Number(count)} ${
                 Number(count) > 1 ? 'sete' : 'seter'
-              } igjen.`
+              } igjen.`,
             });
 
           case PLAY_IS_BOOKED:
@@ -152,24 +148,24 @@ const BookTicket = ({
 
           default:
             return bookTicketFailure({
-              message: 'En feil oppstod under bestillingen'
+              message: 'En feil oppstod under bestillingen',
             });
         }
       }
       // Undefined Error
       return bookTicketFailure({
-        message: 'En feil oppstod under bestillingen'
+        message: 'En feil oppstod under bestillingen',
       });
     }
   };
 
   // No URL param
   if (Object.keys(plays).length && !selectedPlay) {
-    return <Redirect to='/bestill' />;
+    return <Redirect to="/bestill" />;
   }
 
   return (
-    <div className='container BookTicket'>
+    <div className="container BookTicket">
       <PlayDataMemo
         seats={maxSeats - count}
         isLoading={isFetching}
@@ -187,13 +183,9 @@ const BookTicket = ({
           prices,
           formData,
           count,
-          maxSeats
+          maxSeats,
         }}
       />
-      <p className='text-center hasIcon'>
-        <FaInfoCircle /> Betaling gjøres gjennom vipps ved luka på forestillingen. Billett
-        kan også forhåndsbetales. Du vil motta en epost med bekreftelse på reservasjon.
-      </p>
     </div>
   );
 };
@@ -201,21 +193,21 @@ const BookTicket = ({
 BookTicket.propTypes = {
   match: PropTypes.object.isRequired,
   plays: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   plays: selectPlays,
   isFetching: selectPlaysFetching,
   formErrors: selectTicketErr,
-  isTicketFetching: selectTicketLoading
+  isTicketFetching: selectTicketLoading,
 });
 
 const actions = {
   bookTicketStart,
   bookTicketSuccess,
   bookTicketFailure,
-  clearBookingErrors
+  clearBookingErrors,
 };
 
 export default withRouter(connect(mapStateToProps, actions)(BookTicket));
