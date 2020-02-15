@@ -3,7 +3,7 @@ export const ticketReserved = ({
   fullName = '',
   seats = '',
   total = 0,
-  date = '',
+  date = ''
 }) => /*html */ `
 
 <!DOCTYPE html>
@@ -160,13 +160,6 @@ export const ticketReserved = ({
                           forhåndsbetales.
                         </p>
                         <h3>
-                          <img
-                            style="vertical-align: middle; margin-bottom: 3px;"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAABv1BMVEUAAABGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUxGSUwFjjREAAAAlHRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESFBUXGBobHB0eHyEjJCUpKistLzEyMzU2Nzg6Pj9BQkNFR0lKTFBRVFZYW11eX2FiY2Roa2xvcXN0dXh7fH5/gIKDhYaIiYyPkZKUl5iam52eoKKjpaaoqqutr7C0tbm6vL7AwcPFx8jKz9HT1dfZ2tze4OLk6Onr7e/x8/X3+fv9CTlYvgAAA4BJREFUGBmdwYtDU1UABvDv3DM2lhsTFSaRGmA0pbSsFMteWj4qMoySXkSIMDAfDMZDwwCFHmxMt+8P7u7unHvP3Xa32e+HALJ3+ObqHsuK6xMf9UXwItrevsNqjy50oEXdP7O+zHG0oOsug228hibkGBtbiKORYztspngOgcTXbMX9MOqT82zNkw7U0/6Qrcr3oFbkKf12vn/35f3RUKSj680vH9Kv1Itq1ipN+SvdMMXO/0lTPgE/MUtD/gOJGqnHNDwJw+cqDeMh1DVcoicDUw89uwMIklih5zw81gZdGzEEs6bpKiXgukbXchsaukHXErQOurbCaGKKriEov1DLd6AZK0ttW8ARp+skmos9p3YSjmvUJhFMvP5WBI6z1B6hTOxRKUYQKJQl80k4Vqkdgm2A2hUECq3QVkiirJ/aZdjGqBQjCBJaoaOQRNkalW3YclR+QJDQMpVCErZT1BJAnFoftPZ9MMksXYVOAGFqbwCDVIoWlK/IWQmXzNIwD9vvVEaAj6k8gHKTtkUJRS7RtAXbh1QWgJ+oXEbFd3QsSjjkEn0+ha2PynMgQ2UIjjEqGQmbXKTPpIBtHzUL21ReRdkNujISkIv0mRQoC1FrR55KErYUDQtSZujzm4BDUIuhROUAbCM0LSzQZ0pAoZbAHpVu2E6zgSkBRVCL4S8qR1F2m4FuCWghalFkqaRQJmYYYFrA9RI1iQkql+AQM6xrWsBzjEoR+IzKHVSIWdZxW8DwPpVlYIjKM4EKkWaNGQHTLSqjQCe1I1BEmlVmBEyhEpXTAJ5R+QaaSNNnRsDnBLUDAH6kUpDQRJqGWQG/+1T+gS1F7QJcYo6utIBfL7UR2GSRyp6ES8xRSQtUuUetB2XfUrsOj5ijY06gyglqW3AcpOsoPGKetjmBKuEctTOomKe2E4FH/EpOCFRLU/vXQsUhulYtGDriqDFK1zvQxulKW2joIl3rAlrob7qW2tDAKD3d8PTTs9mFIOFZej6HaZyGSwJ1pXL0/CFgsrI0bA6hVs9dGnZj8Atv0bRxNgqTTN2jqZhEtXiOfplPBuJtAiIUPTI8WaLfIGrt32arioOoJ7LG1uQOoz5rmq14HEegUwU2dVWggeg8G9s4jCb61xksd06gueNLrO/pexZa03lxk9V2r7+CFxE78cWDAitKa2NnDuL/sNpjiXhUopH/ANykdPzRJrY3AAAAAElFTkSuQmCC"
-                            alt=""
-                            width="20px"
-                          />
-
                           Status: <span style="font-weight: normal;">Reservert (Ikke betalt)</span>
                         </h3>
                         <ul style="list-style: none;">
@@ -190,7 +183,7 @@ export const ticketReserved = ({
                           Husk å inkludere <b>billettkode!</b>
                           <input
                             style="vertical-align: middle; margin-bottom: 3px; border: 1.5px solid #D8DCFF; background: #ffffff; color:#46494C; padding: 2px 4px; border-radius: 4px; text-align: center; width: 80px;"
-                            value="45513326"
+                            value="${ticketId}"
                             readonly
                           />
                         </p>

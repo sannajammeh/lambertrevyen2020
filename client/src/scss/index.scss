@@ -56,6 +56,9 @@ hr.break {
 .text-center {
   text-align: center;
 }
+.text-success {
+  color: $green;
+}
 .mx-auto {
   margin: 0 auto;
 }
@@ -86,6 +89,12 @@ hr.break {
   margin-top: 3rem;
 }
 
+.hasIcon {
+  svg {
+    vertical-align: middle;
+    margin-bottom: 3px;
+  }
+}
 .u-full-width {
   width: 100%;
 }

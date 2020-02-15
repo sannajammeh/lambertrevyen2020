@@ -11,10 +11,7 @@ import {
 } from '../utils/error.types';
 // Redux
 import { createStructuredSelector } from 'reselect';
-import {
-  selectPlays,
-  selectPlaysFetching
-} from '../redux/plays/plays.selectors';
+import { selectPlays, selectPlaysFetching } from '../redux/plays/plays.selectors';
 import { connect } from 'react-redux';
 import {
   bookTicketStart,
@@ -22,12 +19,10 @@ import {
   bookTicketFailure,
   clearBookingErrors
 } from '../redux/tickets/tickets.actions';
-import {
-  selectTicketLoading,
-  selectTicketErr
-} from '../redux/tickets/tickets.selectors';
+import { selectTicketLoading, selectTicketErr } from '../redux/tickets/tickets.selectors';
 import BookingForm from '../components/BookingForm/BookingForm';
 import spinner from '../components/Spinner/Spinner';
+import { FaInfoCircle } from 'react-icons/fa';
 
 const SpinnerBookingForm = spinner(BookingForm);
 const PlayDataMemo = React.memo(TicketData);
@@ -195,6 +190,10 @@ const BookTicket = ({
           maxSeats
         }}
       />
+      <p className='text-center hasIcon'>
+        <FaInfoCircle /> Betaling gjøres gjennom vipps ved luka på forestillingen. Billett
+        kan også forhåndsbetales. Du vil motta en epost med bekreftelse på reservasjon.
+      </p>
     </div>
   );
 };

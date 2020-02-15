@@ -10,7 +10,7 @@ export const GetTickets = TicketService => async (req, res, next) => {
   }
 };
 
-export const CreateTicket = TicketService => async (req, res, next) => {
+export const CreateTicket = (TicketService, EmailService) => async (req, res, next) => {
   const { name, email, phone, playId, date, seats } = req.body;
 
   try {
@@ -20,11 +20,23 @@ export const CreateTicket = TicketService => async (req, res, next) => {
       phone,
       playId,
       date,
-      seats,
+      seats
     });
 
     const ticket = await ticketRef.get();
-    return res.json({ id: ticket.id, ...ticket.data() });
+    res.json({ id: ticket.id, ...ticket.data() }).end();
+    const ticketData = ticket.data();
+
+    const ticketObj = {
+      id: ticket.id,
+      name: ticketData.name,
+      seats: ticketData.totalSeats,
+      date: ticketData.date,
+      email: ticketData.email,
+      total: ticketData.total
+    };
+
+    const sendEmail = await EmailService.sendTicketReserved(ticketObj);
   } catch (error) {
     next(error);
   }

@@ -18,7 +18,7 @@ class EmailService {
       to: email,
       from: 'no-reply@lambertrevyen2020.no',
       subject: 'Billett er reservert! Lambertrevyen 2020',
-      html: ticketReserved({ ticketId: id, name, seats, total, date }),
+      html: ticketReserved({ ticketId: id, name, seats, total, date })
     };
     return await this.send(request);
   }

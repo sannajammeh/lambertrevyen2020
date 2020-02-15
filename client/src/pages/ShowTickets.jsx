@@ -5,10 +5,7 @@ import Ticket from '../components/Ticket/Ticket';
 import spinner from '../components/Spinner/Spinner';
 //Redux
 import { connect } from 'react-redux';
-import {
-  selectPlaysFetching,
-  selectPlays
-} from '../redux/plays/plays.selectors';
+import { selectPlaysFetching, selectPlays } from '../redux/plays/plays.selectors';
 import { createStructuredSelector } from 'reselect';
 
 const RenderTickets = ({ data }) => (

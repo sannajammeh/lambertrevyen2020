@@ -1,4 +1,5 @@
 'use strict';
+
 import { server } from './src/server';
 
 const app = server();
