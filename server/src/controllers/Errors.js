@@ -6,9 +6,10 @@ import {
   PLAY_NOT_EXIST,
   VALIDATION_ERROR,
 } from '../error.types';
+import { logger } from '../logger';
 
 export const TicketsErrorHandler = (err, req, res, next) => {
-  console.log(err);
+  logger.log({ level: 'info', message: err.message });
   switch (err.message) {
     case BAD_REQUEST:
       return res.status(400).json({ msg: err.message });

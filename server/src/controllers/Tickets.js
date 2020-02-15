@@ -20,7 +20,7 @@ export const CreateTicket = (TicketService, EmailService) => async (req, res, ne
       phone,
       playId,
       date,
-      seats
+      seats,
     });
 
     const ticket = await ticketRef.get();
@@ -33,7 +33,7 @@ export const CreateTicket = (TicketService, EmailService) => async (req, res, ne
       seats: ticketData.totalSeats,
       date: ticketData.date,
       email: ticketData.email,
-      total: ticketData.total
+      total: ticketData.total,
     };
 
     const sendEmail = await EmailService.sendTicketReserved(ticketObj);

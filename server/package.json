@@ -20,7 +20,9 @@
     "express-ensure-ctype": "^1.0.0",
     "express-joi-validation": "^4.0.3",
     "firebase-admin": "^8.9.2",
-    "shortid": "^2.2.15"
+    "intl": "^1.2.5",
+    "shortid": "^2.2.15",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

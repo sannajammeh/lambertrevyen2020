@@ -1,4 +1,6 @@
 /node_modules
 firebaseKey.json
 *.env
-.env
+./.env
+error.log
+info.log
