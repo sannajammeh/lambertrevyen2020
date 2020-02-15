@@ -3,7 +3,7 @@ export const ticketReserved = ({
   fullName = '',
   seats = '',
   total = 0,
-  date = ''
+  date = '',
 }) => /*html */ `
 
 <!DOCTYPE html>
@@ -173,19 +173,15 @@ export const ticketReserved = ({
                         <h2 style="text-decoration: underline;">Forhåndsbetale</h2>
                         <h3 style="margin: 0; margin-bottom: 6px;">
                           VIPPS ${total} TIL
-                          <input
-                            style="vertical-align: middle; margin-bottom: 3px; border: 1.5px solid #D8DCFF; background: #ffffff; color:#46494C; padding: 2px 4px; border-radius: 4px; text-align: center; width: 90px;"
-                            value="+47 45513326"
-                            readonly
-                          />
+                          <span
+                            style="vertical-align: middle; margin-bottom: 3px; border: 1.5px solid #D8DCFF; background: #ffffff; color:#46494C; padding: 2px 4px; border-radius: 4px; text-align: center; font-size: 16px; font-weight: normal;"
+                          >+47 45513326</span>
                         </h3>
                         <p>
                           Husk å inkludere <b>billettkode!</b>
-                          <input
-                            style="vertical-align: middle; margin-bottom: 3px; border: 1.5px solid #D8DCFF; background: #ffffff; color:#46494C; padding: 2px 4px; border-radius: 4px; text-align: center; width: 80px;"
-                            value="${ticketId}"
-                            readonly
-                          />
+                          <span
+                            style="vertical-align: middle; margin-bottom: 3px; border: 1.5px solid #D8DCFF; background: #ffffff; color:#46494C; padding: 2px 4px; border-radius: 4px; text-align: center; font-size: 16px; font-weight: normal;"
+                          >${ticketId}</span>
                         </p>
                         <hr style="border: 0; border-bottom: 1px solid #D8DCFF" />
                         <table
