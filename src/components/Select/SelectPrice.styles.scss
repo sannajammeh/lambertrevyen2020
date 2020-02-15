@@ -1,0 +1,12 @@
+.selectWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  label {
+    flex-basis: 75%;
+  }
+  .selectContainer {
+    flex-basis: 25%;
+  }
+}

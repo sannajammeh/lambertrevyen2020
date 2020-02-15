@@ -1,0 +1,47 @@
+.BookTicket {
+  margin-top: 3rem;
+
+  .ticketData {
+    margin: auto;
+    margin-bottom: 1rem;
+    text-align: left;
+    @include md {
+      width: 80%;
+    }
+    @include lg {
+      width: 70%;
+    }
+    h1 {
+      margin-bottom: 0;
+    }
+    .ticketItem {
+      display: block;
+      margin: 0.5rem 0;
+      font-weight: 500;
+      font-size: 1.5rem;
+      font-family: 'Roboto Slab', serif;
+    }
+    .ticketDesc {
+      margin: 0.3rem 0;
+      svg {
+        vertical-align: middle;
+        margin-bottom: 2px;
+      }
+    }
+  }
+  .ticketError {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: crimson;
+  }
+  form {
+    margin: 0 auto;
+    @include md {
+      width: 80%;
+    }
+    @include lg {
+      width: 70%;
+    }
+  }
+}
