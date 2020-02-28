@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "lambertrevyen2020"
+  },
+  "targets": {
+    "lambertrevyen2020": {
+      "hosting": {
+        "app": [
+          "lambertrevyen2020"
+        ]
+      }
+    }
   }
 }
