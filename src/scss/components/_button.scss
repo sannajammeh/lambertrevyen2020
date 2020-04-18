@@ -39,8 +39,10 @@
     transform: scale(0.95);
   }
   &:disabled {
-    background: #8e8e9c;
+    background: transparent;
     color: #fff;
+    box-shadow: none;
+    border: 1px solid #ccc;
     &:hover {
       transform: scale(1);
     }

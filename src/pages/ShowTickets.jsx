@@ -12,7 +12,7 @@ const RenderTickets = ({ data }) => (
   <>
     <Title className="text-center">Billetter</Title>
     <div className="grid mx-auto ml-1">
-      {data.map(props => (
+      {data.map((props) => (
         <Ticket key={props.id} {...props} />
       ))}
     </div>
@@ -21,12 +21,12 @@ const RenderTickets = ({ data }) => (
 
 const TicketsWithSpinner = spinner(RenderTickets);
 
-const ShowTicket = ({ isFetching, plays }) => {
+const ShowTickets = ({ isFetching, plays }) => {
   const playsArray = React.useMemo(() => {
     const today = new Date().getTime();
-    return Object.values(plays).filter(play => {
+    return Object.values(plays).map((play) => {
       const playDate = new Date(play.date.seconds * 1000).getTime() + 7200000;
-      return playDate > today;
+      return playDate > today ? { ...play, expired: false } : { ...play, expired: true };
     });
   }, [plays]);
 
@@ -42,9 +42,9 @@ const mapStateToProps = createStructuredSelector({
   plays: selectPlays,
 });
 
-export default connect(mapStateToProps)(ShowTicket);
+export default connect(mapStateToProps)(ShowTickets);
 
-ShowTicket.propTypes = {
+ShowTickets.propTypes = {
   isFetching: PropTypes.bool,
   plays: PropTypes.object.isRequired,
 };
